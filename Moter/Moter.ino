@@ -10,17 +10,10 @@ volatile int posi = 0; // specify posi as volatile: https://www.arduino.cc/refer
 long prevT = 0;
 float eprev = 0;
 float eintegral = 0;
-
-// PID constants
-float kp = 1;
-float kd = 0.025;
-float ki = 0.0;
-
-// set target position
-//int target = 1200;
-int extendArmTarget = 2500*sin(prevT/1e6);
 const int buttonPin = 13;
 int buttonState = 0; 
+// motor direction
+int dir = 1;
 
 void setup() {
   Serial.begin(9600);
@@ -31,28 +24,21 @@ void setup() {
   pinMode(PWM,OUTPUT);
   pinMode(IN1,OUTPUT);
   pinMode(IN2,OUTPUT);
-
-//  pinMode(buttonPin, INPUT);
   
 //  Serial.println("target pos");
 }
 
 void loop() {
 
+  // set target position
+  //int target = 1200;
+  int target = 90*sin(prevT/1e6);
 
-  controlArm(extendArmTarget);
-  
-//  buttonState = digitalRead(buttonPin);
-//  if (buttonState == HIGH) {
-//    Serial.println(buttonState);
-//    controlArm(extendArmTarget);
-//  } 
-//  Serial.println(buttonState);
-//  Serial.println(extendArmTarget);
-}
+  // PID constants
+  float kp = 1;
+  float kd = 0.025;
+  float ki = 0.0;
 
-
-void controlArm(int target){
   // time difference
   long currT = micros();
   float deltaT = ((float) (currT - prevT))/( 1.0e6 );
@@ -62,39 +48,38 @@ void controlArm(int target){
   ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
     pos = posi;
   }
-  
-  // error: difference between the measured position and the target
   int e = pos - target;
-
-  // derivative
   float dedt = (e-eprev)/(deltaT);
-
-  // integral
   eintegral = eintegral + e*deltaT;
-
-  // control signal
   float u = kp*e + kd*dedt + ki*eintegral;
 
-  // motor power
+  
   float pwr = fabs(u);
   if( pwr > 255 ){
-    pwr = 255;
-  }
+      pwr = 255;
+    }
 
-  // motor direction
-  int dir = 1;
+  
   if(u<0){
-    dir = -1;
+    pwr = 0;
   }
+  buttonState = digitalRead(buttonPin);
 
-  // signal the motor
+  if (buttonState == LOW) {
+    dir = dir * (-1);
+    pwr = 255;
+    Serial.println(dir);
+    Serial.println(pwr);
+  }else{
+    
+  }
   setMotor(dir,pwr,PWM,IN1,IN2);
 
-
-  // store previous error
   eprev = e;
-}
 
+  delay(100);
+  
+}
 
 void setMotor(int dir, int pwmVal, int pwm, int in1, int in2){
   analogWrite(pwm,pwmVal);
