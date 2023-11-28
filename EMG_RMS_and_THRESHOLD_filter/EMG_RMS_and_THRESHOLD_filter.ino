@@ -1,4 +1,3 @@
-
 const int A0_pin = A0;  // Analog input pin for muscle 1
 const int A1_pin = A1;  // Analog input pin for muscle 2
 const int samples = 10;  // Number of samples
@@ -46,35 +45,6 @@ void loop() {
     // Calculate RMS for each channel for each sample
     float rms0 = calculateRMS(v_rec0, samples);
     float rms1 = calculateRMS(v_rec1, samples);
-    
-    // // Check if RMS values are within the specified range
-    // if (rms0 > lowerThresholdFilter && rms0 < upperThresholdFilter){
-    //   peakCount0++;
-    // }
-    // if (rms1 > lowerThresholdFilter && rms1 < upperThresholdFilter){
-    //   peakCount1++;
-    // }
-
-    // // Check if the time frame for peak detection has elapsed
-    // if (millis() - peakStartTime >= peakDetectionTime) {  
-    //   // Reset counts and time
-    //   peakCount0 = 0;
-    //   peakCount1 = 0;
-    //   peakStartTime = millis();
-    // }
-
-    // // Check if both signals hit above 0.9 and below 1.2 at least three times within 3.5 seconds
-    // if (peakCount0 >= 3 && peakCount1 >= peakCountRequired) {
-    //   Serial.println("Condition Met: Both signals hit above 0.9 and below 1.2 at least three times within 3.5 seconds!");
-    //   Serial.println("Min:0,Max:3");
-    //   Serial.println(rms0);
-    //   Serial.println(rms1);
-    // } else {
-    //   Serial.println("Condition Not Met");
-    //   Serial.println("Min:0,Max:3");
-    //   Serial.println(rms0);
-    //   Serial.println(rms1);
-    // }
 
     // Output or further processing of the features
     Serial.println("Min:0,Max:3");
