@@ -14,6 +14,7 @@ const int buttonPin = 13;
 int buttonState = 0; 
 // motor direction
 int dir = 1;
+//int flag = 1;
 
 void setup() {
   Serial.begin(9600);
@@ -31,7 +32,7 @@ void setup() {
 void loop() {
 
   // set target position
-  //int target = 1200;
+//  int target = 90;
   int target = 90*sin(prevT/1e6);
 
   // PID constants
@@ -62,6 +63,7 @@ void loop() {
   
   if(u<0){
     pwr = 0;
+//    flag = (-1)*flag;
   }
   buttonState = digitalRead(buttonPin);
 
@@ -71,7 +73,7 @@ void loop() {
     Serial.println(dir);
     Serial.println(pwr);
   }else{
-    
+//    pwr = 0;
   }
   setMotor(dir,pwr,PWM,IN1,IN2);
 
