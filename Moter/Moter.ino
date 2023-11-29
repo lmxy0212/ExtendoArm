@@ -26,11 +26,7 @@ void setup() {
 }
 
 void loop() {
-  Serial.print("Ambient = "); Serial.print(mlx.readAmbientTempC()); 
-  Serial.print("*C\tObject = "); Serial.print(mlx.readObjectTempC()); Serial.println("*C");
-  Serial.print("Ambient = "); Serial.print(mlx.readAmbientTempF()); 
-  Serial.print("*F\tObject = "); Serial.print(mlx.readObjectTempF()); Serial.println("*F");
-  Serial.println();
+  
   
   buttonState = digitalRead(buttonPin);
   
@@ -59,4 +55,12 @@ void setMotor(int dir, int pwmVal, int pwm, int in1, int in2){
     digitalWrite(in1,LOW);
     digitalWrite(in2,LOW);
   }  
+}
+
+void readTempreture(){
+  Serial.print("Ambient = "); Serial.print(mlx.readAmbientTempC()); 
+  Serial.print("*C\tObject = "); Serial.print(mlx.readObjectTempC()); Serial.println("*C");
+  Serial.print("Ambient = "); Serial.print(mlx.readAmbientTempF()); 
+  Serial.print("*F\tObject = "); Serial.print(mlx.readObjectTempF()); Serial.println("*F");
+  Serial.println();
 }
