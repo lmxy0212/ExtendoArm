@@ -1,6 +1,6 @@
 #include <Wire.h>
-#include <Adafruit_MLX90614.h>
-Adafruit_MLX90614 mlx = Adafruit_MLX90614();
+//#include <Adafruit_MLX90614.h>
+//Adafruit_MLX90614 mlx = Adafruit_MLX90614();
 
 #define ENCA 2 // YELLOW
 #define ENCB 3 // WHITE
@@ -41,8 +41,8 @@ void setup() {
   pinMode(IN1,OUTPUT);
   pinMode(IN2,OUTPUT);
 
-  Serial.println("Arduino MLX90614 Testing");  
-  mlx.begin();
+//  Serial.println("Arduino MLX90614 Testing");  
+//  mlx.begin();
   
 }
 
@@ -156,13 +156,13 @@ void setMotor(int dir, int pwmVal, int pwm, int in1, int in2){
   }  
 }
 
-void readTempreture(){
-  Serial.print("Ambient = "); Serial.print(mlx.readAmbientTempC()); 
-  Serial.print("*C\tObject = "); Serial.print(mlx.readObjectTempC()); Serial.println("*C");
-  Serial.print("Ambient = "); Serial.print(mlx.readAmbientTempF()); 
-  Serial.print("*F\tObject = "); Serial.print(mlx.readObjectTempF()); Serial.println("*F");
-  Serial.println();
-}
+//void readTempreture(){
+//  Serial.print("Ambient = "); Serial.print(mlx.readAmbientTempC()); 
+//  Serial.print("*C\tObject = "); Serial.print(mlx.readObjectTempC()); Serial.println("*C");
+//  Serial.print("Ambient = "); Serial.print(mlx.readAmbientTempF()); 
+//  Serial.print("*F\tObject = "); Serial.print(mlx.readObjectTempF()); Serial.println("*F");
+//  Serial.println();
+//}
 
 int reset(){
       cocontracting = 0;
